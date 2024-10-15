@@ -13,11 +13,12 @@
     <a-scene embedded arjs>
       <!-- Custom marker definition -->
       <a-marker type="pattern" url="steam.patt">
-        <!-- Link to the animated GLB model -->
+        <!-- Link to the animated GLB model with updated scale and position -->
         <a-entity 
           gltf-model="https://shahidkhan12x.github.io/3d/steam_engine.glb" 
-          scale="0.001 0.0 0.00" 
-          position="0 0 0"
+          scale="0.05 0.05 0.05"   <!-- Adjusted scale for proper visibility -->
+          position="0 0.1 0"       <!-- Raised slightly to align with the marker -->
+          rotation="0 0 0"         <!-- Ensure proper orientation -->
           animation-mixer></a-entity>
       </a-marker>
       <a-entity camera></a-entity>
