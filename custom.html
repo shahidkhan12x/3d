@@ -3,25 +3,62 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AR.js with Custom Marker</title>
+    <title>AR.js with Custom Marker and Manual Control</title>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://cdn.rawgit.com/jeromeetienne/ar.js/1.7.2/aframe/build/aframe-ar.min.js"></script>
-    <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v6.1.1/dist/aframe-extras.min.js"></script>
   </head>
 
   <body style="margin: 0; overflow: hidden;">
     <a-scene embedded arjs>
       <!-- Custom marker definition -->
       <a-marker type="pattern" url="steam.patt">
-        <!-- Link to the animated GLB model with explicit axis and scale settings -->
+        <!-- Link to the animated GLB model -->
         <a-entity 
+          id="model" 
           gltf-model="https://shahidkhan12x.github.io/3d/steam_engine.glb" 
-          scale="0.02 0.02 0.2"  <!-- Uniform scaling of the model -->
-          position="0 0.2 0"   <!-- Adjusted to set the model right on top of the marker -->
-          rotation="0 0 0"     <!-- Keep the model properly oriented -->
+          scale="0.1 0.1 0.1"  <!-- Default scale -->
+          position="0 0.2 0"   <!-- Default position -->
+          rotation="0 0 0"     <!-- Default orientation -->
           animation-mixer></a-entity>
       </a-marker>
       <a-entity camera></a-entity>
     </a-scene>
+
+    <!-- Manual controls for position and scale -->
+    <div style="position: absolute; top: 10px; left: 10px; z-index: 1; background-color: white; padding: 10px;">
+      <label for="x-axis">X Axis:</label>
+      <input type="range" id="x-axis" min="-1" max="1" step="0.01" value="0" oninput="updatePosition()"><br><br>
+
+      <label for="y-axis">Y Axis:</label>
+      <input type="range" id="y-axis" min="0" max="1" step="0.01" value="0.2" oninput="updatePosition()"><br><br>
+
+      <label for="z-axis">Z Axis:</label>
+      <input type="range" id="z-axis" min="-1" max="1" step="0.01" value="0" oninput="updatePosition()"><br><br>
+
+      <label for="scale">Scale:</label>
+      <input type="range" id="scale" min="0.01" max="2" step="0.01" value="0.1" oninput="updateScale()">
+    </div>
+
+    <script>
+      // Function to update the model's position based on slider inputs
+      function updatePosition() {
+        var x = document.getElementById('x-axis').value;
+        var y = document.getElementById('y-axis').value;
+        var z = document.getElementById('z-axis').value;
+        var model = document.getElementById('model');
+        
+        // Update the position of the 3D model
+        model.setAttribute('position', {x: x, y: y, z: z});
+      }
+
+      // Function to update the model's scale based on slider input
+      function updateScale() {
+        var scale = document.getElementById('scale').value;
+        var model = document.getElementById('model');
+        
+        // Update the scale of the 3D model uniformly
+        model.setAttribute('scale', {x: scale, y: scale, z: scale});
+      }
+    </script>
   </body>
 </html>
